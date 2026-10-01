@@ -5,17 +5,15 @@ from Functions.classes import Measures
 import time
 
 def collect():
-    print("Hello! Welcome to your weigh-in application!")
-    print("Below, you will input your information.")
+    print("\nBelow, you will input your information.\n")
     w = float(input("In pounds (lbs), please input today's weight: "))
-    m = input("Separated like (Mo/Day/Yr), please input today's date: ")
-    cr = int(input("Carbohydrate count consumed: "))
-    f = int(input("Fat count consumed: "))
-    p = int(input("Protein count consumed: "))
-    ca = int(input("Calorie count consumed: "))
-    s = int(input("Steps taken: "))
-    a = int(input("Calories burned: "))
-    print("\n")
+    m = input("\nSeparated like (Mo/Day/Yr), please input today's date: ")
+    cr = int(input("\nCarbohydrate count consumed: "))
+    f = int(input("\nFat count consumed: "))
+    p = int(input("\nProtein count consumed: "))
+    ca = int(input("\nCalorie count consumed: "))
+    s = int(input("\nSteps taken: "))
+    a = int(input("\nCalories burned: "))
     
     counter = 0
     while counter != 3:
@@ -23,7 +21,7 @@ def collect():
         time.sleep(1)
         counter += 1
     
-    print(f"Weight: {w}\nDate: {m}\nCarbs: {cr}\nFats: {f}\nProtein: {p}\nTotal Calories: {ca}\nTotal Steps: {s}\nTotal Calories Burned: {a}")
+    print(f"\nWeight: {w}\nDate: {m}\nCarbs: {cr}\nFats: {f}\nProtein: {p}\nTotal Calories: {ca}\nTotal Steps: {s}\nTotal Calories Burned: {a}")
     
     print("\nOne moment while your information is saved...")
     
