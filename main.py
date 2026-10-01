@@ -3,9 +3,10 @@
 
 from Functions.classes import Measures
 from Functions.collection import collect
+from Functions.interaction import menu
 
 def main():
-    collect()
+    menu()
     
 
 
