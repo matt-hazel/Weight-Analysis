@@ -1,4 +1,4 @@
-This program is of personal use for a weight loss journey.
+This program is of use for a weight loss/gain journey.
 
 The packages used are:
     time, csv,
