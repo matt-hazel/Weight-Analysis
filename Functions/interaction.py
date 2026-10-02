@@ -24,7 +24,15 @@ def menu():
             print("This option has not yet been added.")
         elif choice == 3:
             print("------------------------------------------")
-            print("This too, is coming soon!")
+            choice = input("Are you looking to view raw data, cleaned data, or a summary of the data? (raw/cleaned/summary) ")
+            if choice.lower() == "raw":
+                print("Viewing raw data...")
+            elif choice.lower() == "cleaned":
+                print("Viewing cleaned data...")
+            elif choice.lower() == "summary":
+                print("Viewing summary of data...")
+            else:
+                print("Invalid choice. Please try again.")
         elif choice == 4:
             print("------------------------------------------")
             print("Exiting program...")

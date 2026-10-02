@@ -2,9 +2,14 @@
 
 #Imports
 import csv
+from pathlib import Path
+
 
 
 class Measures:
+    DATA_FILE = Path("data") / "weight.csv"
+    
+    
     def __init__(self,weight,modayr,carb,fat,prot,cal,steps,activ):
         self.weight = weight
         self.modayr = modayr
@@ -122,7 +127,8 @@ class Measures:
         self._activ = activ    
         
     def record(self):
-        with open("weight.csv", "a", newline="") as file:
+        self.DATA_FILE.parent.mkdir(exist_ok=True)
+        with open(self.DATA_FILE, "a", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=["weight","modayr","carb","fat","prot","cal","steps","activ"])
             writer.writerow({"weight":self.weight,"modayr":self.modayr,"carb":self.carb,"fat":self.fat,"prot":self.prot,"cal":self.cal,"steps":self.steps,"activ":self.activ})
         print(f"\nWeigh in recorded. {self.weight}lbs on {self.modayr}, on which {self.carb}g Carbohydrates, {self.fat}g Fats, {self.prot}g Protein, and {self.cal} kCals were consumed, had {self.steps} steps, and burned {self.activ} calories.")
