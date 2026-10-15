@@ -1,7 +1,7 @@
 This program is of use for a weight loss/gain journey.
 
 The packages used are:
-    time, csv, path, pandas, plotly, numpy, scipy,
+    time, csv, path, pandas, plotly, numpy, scipy, os, subprocess, 
 
 As of 10/2/2026 1:19am, the terminal interactive menu is fully formatted. I have also added a location folder for the csv's
 to be saved into. For now it is just weight.csv, but later it will also hold clean_weight.csv .
