@@ -4,8 +4,10 @@
 from Functions.classes import Measures
 from Functions.collection import collect
 from Functions.interaction import menu
+from Functions.packages import package_check
 
 def main():
+    package_check()
     menu()
     
 
