@@ -5,7 +5,7 @@
 #Imports
 
 from Functions.collection import collect
-from Functions.analysis import raw_read, cleaning
+from Functions.analysis import raw_read, clean_read
 import time
 import sys
 
@@ -32,7 +32,7 @@ def menu():
                 raw_read()
             elif choice.lower() == "cleaned":
                 print("Viewing cleaned data...")
-                cleaning()
+                clean_read()
             elif choice.lower().strip(" ") == "review":
                 print("\nStarting review...")
             else:

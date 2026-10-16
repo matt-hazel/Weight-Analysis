@@ -2,6 +2,7 @@
 
 # Schema for the data:
 
+import csv
 import pandas as pd
 
 SCHEMA = {
@@ -31,12 +32,15 @@ def normalize(df):
         
     df = df.replace("", pd.NA)
     
-    return df
-
+    df["modayr"] = pd.to_datetime(df["modayr"], errors="coerce")
+    
+    df_sorted = df.sort_values(by="modayr", ascending=True)
+    
+    df_sorted.to_csv(r"data\\weight_clean.csv", index=False)
+    
 
 def clean(path, schema = SCHEMA):
     # This is the function that will clean the data
     df = load(path)
-    df = normalize(df)
+    normalize(df)
     # Perform cleaning operations on df
-    return df
