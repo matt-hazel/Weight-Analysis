@@ -16,3 +16,16 @@ def raw_read():
     with open (r'data\weight.csv', 'r') as file:
         data = pd.read_csv(file)
         print(data)
+        
+        
+def clean():
+    # This function will clean the data, which will be called during clean_read() function, along with beginning of review.
+    ...
+    
+def clean_read():
+    # This will be the function that reads out the cleaned data, which will be called during review.
+    ...
+    
+def review():
+    # This is where the data science portion of the program will be held, started by calling review().
+    ...

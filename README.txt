@@ -3,8 +3,9 @@ This program is of use for a weight loss/gain journey.
 The packages used are:
     time, csv, path, pandas, plotly, numpy, scipy, os, subprocess, 
 
-As of 10/2/2026 1:19am, the terminal interactive menu is fully formatted. I have also added a location folder for the csv's
-to be saved into. For now it is just weight.csv, but later it will also hold clean_weight.csv .
+As of 10/16/2026: There is full terminal menu functionality, CSV writing and raw reading, automatic package detection
+    and if needed also install, along with a set architecture. Current plan is to get the data science portion set up.
+    As of now, getting the cleaning functionality set up is the current objective.
 
 The plan is to eventually set up a data analysis portion, where after certain amounts of data has been input,
     the program can make a guess on your progress and analyze the curve of weight gain or loss.
