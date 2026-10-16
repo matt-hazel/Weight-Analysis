@@ -128,8 +128,11 @@ class Measures:
         
     def record(self):
         self.DATA_FILE.parent.mkdir(exist_ok=True)
+        needs_header = not self.DATA_FILE.exists() or self.DATA_FILE.stat().st_size == 0
         with open(self.DATA_FILE, "a", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=["weight","modayr","carb","fat","prot","cal","steps","activ"])
+            if needs_header:
+                writer.writeheader()
             writer.writerow({"weight":self.weight,"modayr":self.modayr,"carb":self.carb,"fat":self.fat,"prot":self.prot,"cal":self.cal,"steps":self.steps,"activ":self.activ})
         print(f"\nWeigh in recorded. {self.weight}lbs on {self.modayr}, on which {self.carb}g Carbohydrates, {self.fat}g Fats, {self.prot}g Protein, and {self.cal} kCals were consumed, had {self.steps} steps, and burned {self.activ} calories.")
         

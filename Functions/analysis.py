@@ -1,7 +1,8 @@
 # This will be where the analysis section of the data will be.
 # I plan to use pandas, plotly, numpy, scipy
 
-#from classes import Measures
+from Functions.classes import Measures
+from Functions.data_pipe import clean, load, normalize
 import pandas as pd
 #import plotly.express as px
 #import numpy as np
@@ -18,9 +19,13 @@ def raw_read():
         print(data)
         
         
-def clean():
+def cleaning():
     # This function will clean the data, which will be called during clean_read() function, along with beginning of review.
-    ...
+    # For now, this is testing the data pipe
+    
+    d = clean(r'data\weight.csv')
+    print(d)
+    
     
 def clean_read():
     # This will be the function that reads out the cleaned data, which will be called during review.
