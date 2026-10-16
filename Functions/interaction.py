@@ -5,8 +5,10 @@
 #Imports
 
 from Functions.collection import collect
+from Functions.analysis import raw_read
 import time
 import sys
+
 
 def menu():
     print("------------------------------------------")
@@ -27,6 +29,7 @@ def menu():
             choice = input("Are you looking to view raw data, cleaned data, or a summary of the data? (raw/cleaned/summary) ")
             if choice.lower() == "raw":
                 print("Viewing raw data...")
+                raw_read()
             elif choice.lower() == "cleaned":
                 print("Viewing cleaned data...")
             elif choice.lower() == "summary":
