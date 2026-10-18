@@ -6,7 +6,7 @@ import csv
 import pandas as pd
 
 SCHEMA = {
-    "weight" : {"type": "float", "required": True, "min": 0.0, "max": 500.0, "fix": "interpolate"},
+    "weight" : {"type": "float", "required": True, "min": 50.0, "max": 500.0, "fix": "interpolate"},
     "modayr" : {"type": "date", "required": True},
     "carb" : {"type": "int", "required": True, "min": 0},
     "fat" : {"type": "int", "required": True, "min": 0},
@@ -40,8 +40,68 @@ def normalize(df):
     
     return df_sorted
 
+def enforce_types(df, schema = SCHEMA):
+    # Data types being enforced on the data via the schema
+    
+    for col, rules in schema.items():
+        if col not in df:
+            raise KeyError(f"Missing column {col}")
+        t = rules["type"]
+        if t == "date":
+            df[col] = pd.to_datetime(df[col], errors="coerce")
+        else:
+            df[col] = pd.to_numeric(df[col], errors="coerce") # Bad values turn to NaN
+            
+    return df
+    
+def enforce_ranges(df, schema = SCHEMA):
+    # Enforcing the ranges of the data via the schema
+    
+    for col, rule in schema.items():
+        if "min" in rule:
+            df.loc[df[col] < rule["min"], col] = pd.NA
+        if "max" in rule:
+            df.loc[df[col] > rule["max"], col] = pd.NA
+    return df
+
+def apply_fixes(df, schema = SCHEMA):
+    # Applies fixes to the data based on schema rules.
+    
+    for col, rule in schema.items():
+        if "fix" in rule:
+            if rule["fix"] == "interpolate":
+                df[col] = df[col].interpolate()
+    return df
+
+def drop_missing(df, schema = SCHEMA):
+    # Drops rows with missing vals
+    
+    required = [c for c, r in schema.items() if r.get("required")]
+    return df.dropna(subset = required)
+
+def finalize_types(df, schema = SCHEMA):
+    # finalizes the data types of the data
+    
+    for col, rule in schema.items():
+        if rule["type"] == "int":
+            df[col] = df[col].astype(int)
+        elif rule["type"] == "float":
+            df[col] = df[col].astype(float)
+    
+    return df
+
 def clean(path, schema = SCHEMA):
     # This is the function that will clean the data
     df = load(path)
-    normalize(df)
+    df = normalize(df)
+    df = enforce_types(df, schema)
+    df = enforce_ranges(df, schema)
+    df = apply_fixes(df, schema)
+    df = drop_missing(df, schema)
+    df = finalize_types(df, schema)
+    
+    df = df.drop_duplicates(subset = "modayr").reset_index(drop = True)
+    df.to_csv(r"data\weight_clean.csv", index=False)
+    
+    return df
     # Perform cleaning operations on df
