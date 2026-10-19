@@ -9,3 +9,6 @@ __pycache__/
 
 #Data
 data/*.csv
+
+#for the time being, ignore the data review file
+Functions/data_review.py 
