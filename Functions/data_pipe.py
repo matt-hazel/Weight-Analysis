@@ -8,12 +8,12 @@ import pandas as pd
 SCHEMA = {
     "weight" : {"type": "float", "required": True, "min": 50.0, "max": 500.0, "fix": "interpolate"},
     "modayr" : {"type": "date", "required": True},
-    "carb" : {"type": "int", "required": True, "min": 0, "max": 1000},
-    "fat" : {"type": "int", "required": True, "min": 0, "max": 1000},
-    "prot" : {"type": "int", "required": True, "min": 0, "max": 1000},
-    "cal" : {"type": "int", "required": True, "min": 0, "max": 10000},
-    "steps" : {"type": "int", "required": True, "min": 0, "max": 100000},
-    "activ": {"type": "int", "required": True, "min": 0, "max": 2000}
+    "carb" : {"type": "int", "required": True, "min": 1, "max": 1000},
+    "fat" : {"type": "int", "required": True, "min": 1, "max": 1000},
+    "prot" : {"type": "int", "required": True, "min": 1, "max": 1000},
+    "cal" : {"type": "int", "required": True, "min": 1, "max": 10000},
+    "steps" : {"type": "int", "required": True, "min": 1, "max": 100000},
+    "activ": {"type": "int", "required": True, "min": 1, "max": 2000}
 }
 
 def load(path, schema = SCHEMA):

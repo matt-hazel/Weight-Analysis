@@ -7,7 +7,6 @@ from Functions.interaction import menu"""
 from Functions.packages import package_check
 
 def main():
-    print("lets see...")
     package_check()
     
     from Functions.classes import Measures
