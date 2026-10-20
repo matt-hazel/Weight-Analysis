@@ -1,0 +1,15 @@
+<!-- This is the beginnings of moving the menu interactions to the web app -->
+
+{% extends "base.html" %}
+{% block title %}Menu{% endblock %}
+
+{% block content %}
+  <h1>Welcome to the Weigh-In-Station!</h1>
+  <p>What would you like to do?</p>
+
+  <nav class="menu">
+    <a href="{{ url_for('weigh_in') }}">Weigh-in</a>
+    <a href="{{ url_for('dashboard') }}">View recent Weigh-ins</a>
+    <a href="{{ url_for('analysis') }}">Scientific Analysis</a>
+  </nav>
+{% endblock %}
