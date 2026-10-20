@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  {% if plots %}
+    <div class="tabs">
+      {% for name in plots %}
+        <button type="button" data-target="panel-{{ loop.index }}"
+                class="{{ 'active' if loop.first }}">{{ name }}</button>
+      {% endfor %}
+    </div>
+
+    {% for name, html in plots.items() %}
+      <section id="panel-{{ loop.index }}" class="panel {{ 'active' if loop.first }}">
+        {{ html | safe }}
+      </section>
+    {% endfor %}
+  {% else %}
+    <p>No data yet. Log some weigh-ins first.</p>
+  {% endif %}
+
+  <script>
+    const buttons = document.querySelectorAll(".tabs button");
+    const panels = document.querySelectorAll(".panel");
+
+    buttons.forEach(btn => btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      panels.forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      const panel = document.getElementById(btn.dataset.target);
+      panel.classList.add("active");
+      // Plotly draws hidden plots at the wrong size, so resize when a tab opens
+      panel.querySelectorAll(".js-plotly-plot").forEach(p => Plotly.Plots.resize(p));
+    }));
+  </script>
+{% endblock %}
