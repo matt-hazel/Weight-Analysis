@@ -1,7 +1,7 @@
 This program is of use for a weight loss/gain journey.
 
 The packages used are:
-    time, csv, path, pandas, plotly, numpy, scipy, os, subprocess, statsmodels
+    time, csv, path, pandas, plotly, numpy, scipy, os, subprocess, statsmodels, flask
 
 As of 10/20/2026: There is full terminal menu functionality, CSV writing and raw reading, automatic package detection
     and if needed also install, along with a set architecture. The data review has been set up in a flask dashboard,
