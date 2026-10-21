@@ -1,8 +1,7 @@
 # This will be where the analysis section of the data will be.
 # I plan to use pandas, plotly, numpy, scipy
 
-from Functions.classes import Measures
-from Functions.data_pipe import clean, load, normalize
+from Functions.data_pipe import clean
 import pandas as pd
 #import plotly.express as px
 #import numpy as np
@@ -24,20 +23,3 @@ def recent_df(source = "raw", days = 7):
     df["modayr"] = df["modayr"].dt.strftime("%m/%d/%Y")
     
     return df
-
-
-
-# I need to create a function for viewing the raw data or the clean version.
-
-def raw_read():
-    # This function will read the raw data from the csv
-    print(raw_df())
-    
-    
-def clean_read():
-    # This will be the function that reads out the cleaned data, which will be called during review.
-    print(clean_df())
-    
-def review():
-    # This is where the data science portion of the program will be held, started by calling review().
-    ...
