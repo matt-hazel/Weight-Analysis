@@ -5,10 +5,12 @@ import pandas as pd
 from Functions.plots import build_all
 from Functions.analysis import raw_df, clean_df, recent_df
 from Functions.classes import Measures
+from data.key import secret_key
 
 
 # looks for templates/ and static/ next to this file
 app = Flask(__name__) 
+app.secret_key = secret_key
 
 @app.route("/")
 def menu():

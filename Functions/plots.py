@@ -40,6 +40,7 @@ def scatter_matrix(df):
     )
     
     fig.update_traces(diagonal_visible = False)
+    fig.update_layout(height = 1000, font = dict(size = 10))
     
     return fig
 
