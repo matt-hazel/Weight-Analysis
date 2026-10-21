@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 clean_csv = Path(__file__).resolve().parent.parent / "data" / "weight_clean.csv"
@@ -39,6 +40,7 @@ def scatter_matrix(df):
     )
     
     fig.update_traces(diagonal_visible = False)
+    fig.update_layout(height = 1000, font = dict(size = 10))
     
     return fig
 
@@ -69,20 +71,21 @@ def weekly_heatmap(df):
 
 def weight_vs_intake_activity(df):
     d = add_rolling(df)
-    
-    fig = make_subplots(rows = 3, cols = 1, shared_xaxes= True, subplot_titles = ("Weight (lb)", "Calories", "Steps"))
-    
-    fig.add_scatter(x = d.modayr, y = d.weight, mode = "markers", opacity = 0.4, row = 1, col = 1, name = "Weight")
-    
-    fig.add_scatter(x = d.modayr, y = d.weight_7d, mode = "markers", opacity = 0.4, row = 1, col = 1, name = "Weight 7D Avg")
-    
-    fig.add_scatter(x = d.modayr, y = d.cal_7d, mode = "markers", opacity = 0.4, row = 1, col = 1, name = "Calories 7D Avg")
-    
-    fig.add_scatter(x = d.modayr, y = d.steps_7d, mode = "markers", opacity = 0.4, row = 1, col = 1, name = "Steps 7D Avg")
-    
-    fig.update_layout(height = 800, title = "Weight vs intake and Activity")
-    
-    
+
+    fig = go.Figure()
+    fig.add_scatter(x=d.modayr, y=d.weight, mode="markers", opacity=0.4, name="Weight")
+    fig.add_scatter(x=d.modayr, y=d.weight_7d, mode="lines", name="Weight 7D Avg")
+    fig.add_scatter(x=d.modayr, y=d.cal_7d, mode="lines", name="Calories 7D Avg", yaxis="y2")
+    fig.add_scatter(x=d.modayr, y=d.steps_7d, mode="lines", name="Steps 7D Avg", yaxis="y3")
+
+    fig.update_layout(
+        height=600,
+        title="Weight vs intake and Activity",
+        xaxis=dict(title="Date", domain=[0, 0.85]),
+        yaxis=dict(title="Weight (lb)"),
+        yaxis2=dict(title="Calories", overlaying="y", side="right"),
+        yaxis3=dict(title="Steps", overlaying="y", side="right", anchor="free", position=0.95),
+    )
     return fig
 
 def calories_vs_weight(df):

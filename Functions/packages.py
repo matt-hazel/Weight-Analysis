@@ -5,7 +5,9 @@ def package_check():
     # This is to check if packages are installed
     # If not, will install, if so, it will skip install
     
-    REQUIRED_PACKAGES = ['numpy', 'pandas', 'matplotlib', 'scikit-learn', 'seaborn', 'sys', 'subprocess', 'os', 'json', 'requests', 'flask', 'plotly', 'scipy', 'csv','pathlib','time','statsmodels']
+    # As of 10/20/2026 I am thinking of getting rid of this auto download file and leaning towards requirements.txt
+    
+    REQUIRED_PACKAGES = ['numpy', 'pandas', 'matplotlib', 'sklearn', 'seaborn', 'sys', 'subprocess', 'os', 'json', 'requests', 'flask', 'plotly', 'scipy', 'csv','pathlib','time','statsmodels']
     
     for package in REQUIRED_PACKAGES:
         try:

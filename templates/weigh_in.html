@@ -1,0 +1,19 @@
+<!-- Weigh in site -->
+
+{% extends "base.html" %}
+{% block title %}Weigh-in{% endblock %}
+
+{% block content %}
+    <h1>Weigh-in</h1>
+    <form method = "post" class = "form">
+        <label>Date <input type = "date" name = "date" required></label>
+        <label>Weight (lbs) <input type = "number" step ="0.1" name = "weight" required></label>
+        <label>Carbs (g) <input type = "number" name = "carb" required></label>
+        <label>Fat (g) <input type = "number" name = "fat" required></label>
+        <label>Protein (g) <input type = "number" name = "prot" required></label>
+        <label>Calories consumed <input type = "number" name = "cal" required></label>
+        <label>Steps <input type = "number" name = "steps" required></label>
+        <label>Calories burned <input type = "number" name = "activ" required></label>
+        <button type = "submit">Save</button>
+    </form>
+{% endblock %}

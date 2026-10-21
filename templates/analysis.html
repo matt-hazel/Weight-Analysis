@@ -1,0 +1,13 @@
+<!-- This is the site for the analysis-->
+
+{% extends "base.html" %}
+{% block title %}Scientific Analysis{% endblock %}
+
+{% block content %}
+    <h1>Scientific Analysis</h1>
+    <nav class = "menu">
+        <a href = "{{ url_for('analysis_raw') }}">View raw data</a>
+        <a href = "{{ url_for('analysis_cleaned')}}">View cleaned data</a>
+        <a href = "{{ url_for('dashboard')}}">Review (dashboard)</a>
+    </nav>
+{% endblock %}
