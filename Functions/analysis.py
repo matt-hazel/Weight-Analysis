@@ -20,7 +20,7 @@ def recent_df(days = 7):
     df = raw_df()
     df["modayr"] = pd.to_datetime(df["modayr"], errors = "coerce")
     df = df.dropna(subset = ["modayr"]).sort_values("modayr").tail(days)
-    df["modayr"] = df["modayr"].dt.strframe("%m/%d/%Y")
+    df["modayr"] = df["modayr"].dt.strftime("%m/%d/%Y")
     
     return df
 

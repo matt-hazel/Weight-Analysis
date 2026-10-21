@@ -14,7 +14,7 @@ app = Flask(__name__)
 def menu():
     return render_template("menu.html")
 
-@app.route("/weigh-in")
+@app.route("/weigh-in", methods = ["GET", "POST"])
 
 def weigh_in():
     if request.method == "POST":
@@ -40,12 +40,12 @@ def analysis():
 @app.route("/analysis/raw")
 
 def analysis_raw():
-    return render_template("analysis/raw.html", title = "Raw data", df = raw_df())
+    return render_template("data_table.html", title = "Raw data", df = raw_df())
 
-@app.route("analysis/cleaned")
+@app.route("/analysis/cleaned")
 
 def analysis_cleaned():
-    return render_template("analysis/cleaned.html", title = "Cleaned data", df = clean_df())
+    return render_template("data_table.html", title = "Cleaned data", df = clean_df())
 
 @app.route("/analysis/review")
 
@@ -70,7 +70,7 @@ def dashboard():
 @app.route("/recent")
 
 def recent():
-    return render_template("data_table.html", title = "Recent weigh-ins (last 7)")
+    return render_template("data_table.html", title = "Recent weigh-ins (last 7)", df = recent_df("raw"))
 
 
 if __name__ == "__main__":
