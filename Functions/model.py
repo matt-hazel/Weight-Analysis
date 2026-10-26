@@ -9,6 +9,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+#for the multi testing
+import glob
+
+
+
 # load data
 
 df = pd.read_csv(r"data/weight_clean.csv", parse_dates = ['modayr'])
@@ -25,8 +30,6 @@ def ewma_trend(df, halflife = 3):
     return df["weight"].ewm(halflife = f"{halflife} days", times = df["modayr"]).mean()
 
 df["ewma"] = ewma_trend(df)
-print("THIS IS THE NEW SHIT")
-print(df[["modayr", "weight", "ewma"]].tail(10))
 
 
 def weekly_rate(trend, days, span = 14):
@@ -60,8 +63,10 @@ def backtest_ewma(df, halflife, span, horizon = 7, min_train = 21):
         
     return np.mean(errs), np.mean(flat_errs), np.mean(naive_errs), len(errs)
 
-for hl in (1,2,3,4,5):
-    for span in (7, 10, 14):
+# Change this number for halflives
+for hl in (1,3):
+    # Change this number(s) for different spans
+    for span in (28,42):
         slope, flat, naive, runs = backtest_ewma(df, hl, span)
         print(f"half life {hl}d, span {span}: slope {slope:.2f} | flat {flat:.2f} | naive {naive:.2f} | runs {runs}")
         
@@ -69,3 +74,36 @@ plt.scatter(df["modayr"], df["weight"], s = 8, c = "r", label = "Weight")
 plt.plot(df["modayr"], df["ewma"], c = "b", label = "EWMA trend")
 plt.legend()
 plt.show()
+
+
+# Previous Test Data
+
+"""def load_user(path):
+    d = pd.read_csv(path, parse_dates= ["modayr"])
+    d = d.sort_values("modayr").reset_index(drop=True)
+    d["day"] = (d["modayr"] - d["modayr"].min()).dt.days
+    
+    return d
+
+users = [load_user(p) for p in sorted(glob.glob(r"data/training/user_*.csv"))]
+
+
+def grid_all(users, halflives, spans, **kwargs):
+    rows = []
+    for hl in halflives:
+        for span in spans:
+            scores = [backtest_ewma(u, hl, span, **kwargs) for u in users]
+            slope = np.mean([s[0] for s in scores])
+            flat = np.mean([s[1] for s in scores])
+            naive = np.mean([s[2] for s in scores])
+            wins = sum(s[0] < s[2] for s in scores)
+            
+            rows.append((hl, span, slope, flat, naive, wins))
+            
+    return pd.DataFrame(rows, columns = ["halflife", "span", "slope", "flat","naive", "wins"])
+
+
+results = grid_all(users, halflives = (1,2,3,5), spans = (14, 28, 42, 56, 90), min_train = 90)
+print(results.sort_values("slope").head(10).to_string(index = False))
+
+print("done!")"""
