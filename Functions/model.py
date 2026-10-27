@@ -16,7 +16,7 @@ from itertools import product
 
 # load data
 
-df = pd.read_csv(r"data/training/user_01.csv", parse_dates = ['modayr'])
+df = pd.read_csv(r"data/weight_clean.csv", parse_dates = ['modayr'])
 df = df.sort_values("modayr").reset_index(drop=True)
 
 df["day"] = (df["modayr"] - df['modayr'].min()).dt.days

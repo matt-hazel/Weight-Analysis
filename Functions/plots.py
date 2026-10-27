@@ -7,6 +7,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from Functions.forecast import forecast
 
 clean_csv = Path(__file__).resolve().parent.parent / "data" / "weight_clean.csv"
 dow_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -100,9 +101,33 @@ def calories_vs_weight(df):
     return fig
 
 
+def weight_forecast(df):
+    # the EWMA + lag correction model from forecast.py
+    
+    f = forecast(df)
+    
+    fig = go.Figure()
+    
+    
+    # checking for suffecient data
+    if f is None:
+        fig.update_layout(title = "Forecast needs at least 14 weigh-ins to begin.")
+        return fig
+    
+    d = f["data"]
+    x_future = [d["modayr"].iloc[-1], *f["dates"]]
+    
+    fig.add_scatter(x = d["modayr"], y = d["weight"], mode = "markers", opacity = 0.4, name = "Weight")
+    fig.add_scatter(x = d["modayr"], y = d["trend"], mode = "lines", name = "EWMA trend")
+    fig.add_scatter(x = x_future, y = [f["level"]] * len(x_future), mode = "lines", line = dict(dash = "dash"), name = "Forecast")
+    fig.update_layout(title = "Weight forecast", xaxis_title = "Date", yaxis_title = "Weight (lb)")
+    
+    return fig
+
 # This is the order of the plots as they will be displayed on the dashboard (app.py)
 
 plots = {
+    "Weight Forecast": weight_forecast,
     "Weight over time": weight_over_time,
     "Weight vs intake + activity": weight_vs_intake_activity,
     "Calories vs weight": calories_vs_weight,
