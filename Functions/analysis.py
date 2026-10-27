@@ -1,11 +1,7 @@
-# This will be where the analysis section of the data will be.
-# I plan to use pandas, plotly, numpy, scipy
+# This is where the analysis section of the data is.
 
 from Functions.data_pipe import clean
 import pandas as pd
-#import plotly.express as px
-#import numpy as np
-#from scipy import stats
 
 
 def raw_df():

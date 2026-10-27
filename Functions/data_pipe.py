@@ -2,7 +2,6 @@
 
 # Schema for the data:
 
-import csv
 import pandas as pd
 
 SCHEMA = {
@@ -16,7 +15,7 @@ SCHEMA = {
     "activ": {"type": "int", "required": True, "min": 1, "max": 2000}
 }
 
-def load(path, schema = SCHEMA):
+def load(path):
     # Loading the data from weight.csv
     return pd.read_csv(path)
 
@@ -35,8 +34,6 @@ def normalize(df):
     df["modayr"] = pd.to_datetime(df["modayr"], errors="coerce")
     
     df_sorted = df.sort_values(by="modayr", ascending=True)
-        
-    df_sorted.to_csv(r"data\\weight_clean.csv", index=False)
     
     return df_sorted
 

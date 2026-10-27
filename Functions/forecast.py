@@ -3,10 +3,11 @@
 import numpy as np
 import pandas as pd
 
-halflife = 5
-span = 28
-horizon = 14
-min_rows = 14
+HALFLIFE = 5
+SPAN = 28
+HORIZON = 21 # prediction horizon
+MIN_ROWS = 14 # min amount of data to be used
+PHI = 0.9 # dampening factor
 
 
 
@@ -21,29 +22,37 @@ def prepare(df):
     return d
 
 
-def ewma_trend(d, halflife = halflife):
+def ewma_trend(d, halflife = HALFLIFE):
     return d["weight"].ewm(halflife = f"{halflife} days", times = d["modayr"]).mean()
 
 
-def daily_rate(trend, days, span = span):
-    span = min(span, len(trend))
+
+def local_rate(trend, days, span = SPAN):
+    # This is for the slope of the pre-forecasted line.
     
+    t, x = trend.to_numpy(), days.to_numpy()
+    out = np.zeros(len(t))
     
-    return np.polyfit(days.iloc[-span:], trend.iloc[-span:], 1)[0]
+    for i in range(2, len(t)):
+        lo = max(0, i + 1 - span)
+        out[i] = np.polyfit(x[lo:i + 1], t[lo:i + 1], 1)[0]
+        
+    return out
 
 
-def forecast(df, horizon = horizon, halflife = halflife, span = span):
+def forecast(df, horizon = HORIZON, halflife = HALFLIFE, span = SPAN, phi = PHI):
     d = prepare(df)
-    if len(d) < min_rows:
-        return None # setup display on dash to say like "unlock prediction at 14 days"
+    if len(d) < MIN_ROWS:
+        return None
     
     d["trend"] = ewma_trend(d, halflife)
+    d["rate"] = local_rate(d["trend"], d["day"], span)
+    d["smooth"] = d["trend"] + d["rate"] * halflife / np.log(2)
     
-    rate = daily_rate(d["trend"], d["day"], span)
-    
-    level = d["trend"].iloc[-1] + rate * halflife / np.log(2)
-    
+    level = d["smooth"].iloc[-1]
+    rate = d["rate"].iloc[-1]
+    steps = np.arange(1, horizon + 1)
+    future = level + rate * np.cumsum(phi ** steps)
     dates = pd.date_range(d["modayr"].iloc[-1] + pd.Timedelta(days = 1), periods = horizon)
     
-    
-    return {"data": d, "level": level, "weekly_rate": rate * 7, "dates": dates}
+    return {"data": d, "level": level, "future": future, "weekly_rate": d["rate"].iloc[-1] * 7, "dates": dates}

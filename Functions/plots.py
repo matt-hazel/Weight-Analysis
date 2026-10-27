@@ -102,24 +102,30 @@ def calories_vs_weight(df):
 
 
 def weight_forecast(df):
-    # the EWMA + lag correction model from forecast.py
+    # EWMA + Lag correction model from forecast.py
     
     f = forecast(df)
-    
     fig = go.Figure()
     
-    
-    # checking for suffecient data
+    # Checking for Sufficent data amount
     if f is None:
-        fig.update_layout(title = "Forecast needs at least 14 weigh-ins to begin.")
+        fig.update_layout(title = "Forecast needs at least 14 weigh-ins")
         return fig
     
     d = f["data"]
     x_future = [d["modayr"].iloc[-1], *f["dates"]]
     
     fig.add_scatter(x = d["modayr"], y = d["weight"], mode = "markers", opacity = 0.4, name = "Weight")
-    fig.add_scatter(x = d["modayr"], y = d["trend"], mode = "lines", name = "EWMA trend")
-    fig.add_scatter(x = x_future, y = [f["level"]] * len(x_future), mode = "lines", line = dict(dash = "dash"), name = "Forecast")
+    fig.add_scatter(x = d["modayr"], y = d["smooth"], mode = "lines", name = "Trend")
+    fig.add_scatter(x = x_future, y = [f["level"], *f["future"]], mode = "lines", line = dict(dash = "dash"), name = "Forecast")
+    
+    recent = d[d["modayr"] >= d["modayr"].iloc[-1] - pd.Timedelta(days = 90)]
+    
+    lo = min(recent["weight"].min(), f["future"].min()) - 2
+    hi = max(recent["weight"].max(), f["level"]) + 2
+    
+    fig.update_xaxes(range = [recent["modayr"].iloc[0], f["dates"][-1]])
+    fig.update_yaxes(range = [lo, hi])
     fig.update_layout(title = "Weight forecast", xaxis_title = "Date", yaxis_title = "Weight (lb)")
     
     return fig
@@ -128,12 +134,10 @@ def weight_forecast(df):
 
 plots = {
     "Weight Forecast": weight_forecast,
-    "Weight over time": weight_over_time,
     "Weight vs intake + activity": weight_vs_intake_activity,
     "Calories vs weight": calories_vs_weight,
     "Weekly heatmap": weekly_heatmap,
-    "Correlations": correlation_heatmap,
-    "Scatter matrix": scatter_matrix
+    "Correlations": correlation_heatmap
 }
 
 # This function builds everything
