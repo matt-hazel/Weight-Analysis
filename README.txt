@@ -126,4 +126,3 @@ ROADMAP
 -------
 - Forecast uncertainty band and headline numbers on the dashboard
 - Use calories and steps as drivers of weight change
-- Replace the automatic package installer with requirements.txt

@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import pandas as pd
 from Functions.plots import build_all
-from Functions.analysis import raw_df, clean_df, recent_df
+from Functions.analysis import raw_df, clean_df, recent_df, clear_data, has_data
 from Functions.classes import Measures
 from data.key import secret_key
 
@@ -52,6 +52,12 @@ def analysis_cleaned():
 @app.route("/analysis/review")
 
 def dashboard():
+    
+    if not has_data():
+        flash("No data yet. Add a weigh-in before opening the dashboard.")
+        return redirect(url_for("weigh_in"))
+    
+    
     source = request.args.get("source", "cleaned")
     
     if source == "raw":
@@ -73,6 +79,14 @@ def dashboard():
 
 def recent():
     return render_template("data_table.html", title = "Recent weigh-ins (last 7)", df = recent_df("raw"))
+
+@app.route("/analysis/delete", methods = ["POST"])
+
+def clear_all_data():
+    clear_data()
+    flash("All weigh in data cleared.")
+
+    return redirect(url_for("analysis"))
 
 
 if __name__ == "__main__":
