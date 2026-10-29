@@ -3,7 +3,6 @@
 
 import threading
 import webbrowser
-from Functions.packages import package_check
 
 from app import app
 
@@ -11,8 +10,6 @@ URL = "http://127.0.0.1:5000/"
 
 
 def main():
-    package_check()
-    
     threading.Timer(1.0, lambda: webbrowser.open_new(URL)).start()
     app.run(debug=False)    
 

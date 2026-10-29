@@ -23,7 +23,7 @@ Python 3.11 or newer (developed on 3.14) with:
     numpy, pandas, flask, plotly, statsmodels
 
 statsmodels is needed for the trendline on the "Calories vs weight" chart.
-main.py checks for missing packages on launch and installs them.
+Install dependencies with "pip install -r requirements.txt"
 
 
 SETUP
