@@ -47,6 +47,11 @@ def analysis_raw():
 @app.route("/analysis/cleaned")
 
 def analysis_cleaned():
+    if not has_data():
+        flash("No data yet, please weigh-in first!")
+        return redirect(url_for("weigh_in"))
+    
+    
     return render_template("data_table.html", title = "Cleaned data", df = clean_df())
 
 @app.route("/analysis/review")

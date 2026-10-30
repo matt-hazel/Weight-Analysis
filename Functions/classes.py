@@ -25,17 +25,17 @@ class Measures:
             raise ValueError("Not Valid weight count")
         if not modayr:
             raise ValueError("Not a valid Mo/Da/Yr format")
-        if not carb:
+        if carb is None:
             raise ValueError("Not a Valid carb count")
-        if not fat:
+        if fat is None:
             raise ValueError("Not a Valid fat count")
-        if not prot:
+        if prot is None:
             raise ValueError("Not a Valid protein count")
         if not cal:
             raise ValueError("Not a Valid calorie count")
-        if not steps:
+        if steps is None:
             raise ValueError("Not a Valid step count")
-        if not activ:
+        if activ is None:
             raise ValueError("Not a valid acitivity count")
         
     #Getter for weight
