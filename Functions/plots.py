@@ -126,7 +126,8 @@ def weight_forecast(df):
     
     fig.update_xaxes(range = [recent["modayr"].iloc[0], f["dates"][-1]])
     fig.update_yaxes(range = [lo, hi])
-    fig.update_layout(title = "Weight forecast", xaxis_title = "Date", yaxis_title = "Weight (lb)")
+    fig.update_layout(title = "Weight forecast", xaxis_title = "Date", yaxis_title = "Weight (lb)", autosize = True,
+                      height = 500, margin = dict(l = 40, r = 20, t = 50, b =40))
     
     return fig
 
