@@ -33,7 +33,11 @@ SETUP
        data/key.py
            secret_key = "any long random string"
 
-2. Run from the project root (file paths are relative to it):
+
+2. Run "pip install -r requirements.txt"
+
+
+3. Run from the project root (file paths are relative to it):
 
        python main.py
 

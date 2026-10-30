@@ -33,7 +33,7 @@ def normalize(df):
     
     df["modayr"] = pd.to_datetime(df["modayr"], errors="coerce")
     
-    df_sorted = df.sort_values(by="modayr", ascending=True)
+    df_sorted = df.sort_values(by="modayr", ascending=True, kind = "stable")
     
     return df_sorted
 
@@ -97,7 +97,7 @@ def clean(path, schema = SCHEMA):
     df = drop_missing(df, schema)
     df = finalize_types(df, schema)
     
-    df = df.drop_duplicates(subset = "modayr").reset_index(drop = True)
+    df = df.drop_duplicates(subset = "modayr", keep = "last").reset_index(drop = True)
     df.to_csv(r"data\weight_clean.csv", index=False)
     
     return df
