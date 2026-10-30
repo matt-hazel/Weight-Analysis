@@ -125,8 +125,3 @@ Functions/model.py contains the backtests and the grid search across
 data/training/user_*.csv. The training folder is git-ignored, so supply
 your own files with the same columns to rerun it.
 
-
-ROADMAP
--------
-- Forecast uncertainty band and headline numbers on the dashboard
-- Use calories and steps as drivers of weight change
